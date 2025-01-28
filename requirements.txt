@@ -1,6 +1,0 @@
-streamlit
-tensorflow
-altair
-numpy
-pandas
-Pillow
