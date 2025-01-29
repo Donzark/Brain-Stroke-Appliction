@@ -14,41 +14,16 @@ import tf_keras
 # Streamlit Layout
 st.set_page_config(page_title="Stroke Detection", page_icon="🧠")
 
-# Function to preprocess and predict
-# @st.cache_resource #(suppress_st_warning=True)
-# def predict_image(image, _model):
-#     # Load and preprocess the image
-#     image = load_img(image, target_size=(224, 224))  # Resize to model's input size
-#     image = img_to_array(image) / 255.0  # Normalize pixel values
-#     image = np.expand_dims(image, axis=0)  # Add batch dimension
-
-#     # Make predictions
-#     preds = model.predict(image)
-#     pred_class = class_names[np.argmax(preds[0])]
-#     pred_conf = np.max(preds[0])
-
-#     # Create a DataFrame for visualization
-#     df = pd.DataFrame({
-#         "Class": class_names,
-#         "Confidence (%)": preds[0] * 100,
-#         "color": ['#EC5953' if i == np.argmax(preds[0]) else '#3498DB' for i in range(len(class_names))]
-#     })
-#     df = df.sort_values("Confidence (%)", ascending=False)
-#     return pred_class, pred_conf, df
-@st.cache_resource
+Function to preprocess and predict
+@st.cache_resource #(suppress_st_warning=True)
 def predict_image(image, _model):
     # Load and preprocess the image
     image = load_img(image, target_size=(224, 224))  # Resize to model's input size
-    image = img_to_array(image) / 255.0  # Normalize pixel values
+    image = img_to_array(image)   # Normalize pixel values
     image = np.expand_dims(image, axis=0)  # Add batch dimension
 
     # Make predictions
     preds = model.predict(image)
-    
-    print("Raw model outputs:", preds)  # Debugging step
-    print("Predicted class:", np.argmax(preds[0]))
-    print("Predicted confidence:", np.max(preds[0]))
-
     pred_class = class_names[np.argmax(preds[0])]
     pred_conf = np.max(preds[0])
 
@@ -60,6 +35,31 @@ def predict_image(image, _model):
     })
     df = df.sort_values("Confidence (%)", ascending=False)
     return pred_class, pred_conf, df
+# @st.cache_resource
+# def predict_image(image, _model):
+#     # Load and preprocess the image
+#     image = load_img(image, target_size=(224, 224))  # Resize to model's input size
+#     image = img_to_array(image) / 255.0  # Normalize pixel values
+#     image = np.expand_dims(image, axis=0)  # Add batch dimension
+
+#     # Make predictions
+#     preds = model.predict(image)
+    
+#     print("Raw model outputs:", preds)  # Debugging step
+#     print("Predicted class:", np.argmax(preds[0]))
+#     print("Predicted confidence:", np.max(preds[0]))
+
+#     pred_class = class_names[np.argmax(preds[0])]
+#     pred_conf = np.max(preds[0])
+
+#     # Create a DataFrame for visualization
+#     df = pd.DataFrame({
+#         "Class": class_names,
+#         "Confidence (%)": preds[0] * 100,
+#         "color": ['#EC5953' if i == np.argmax(preds[0]) else '#3498DB' for i in range(len(class_names))]
+#     })
+#     df = df.sort_values("Confidence (%)", ascending=False)
+#     return pred_class, pred_conf, df
 
 
 # Define class names
