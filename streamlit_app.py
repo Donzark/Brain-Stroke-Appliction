@@ -9,6 +9,7 @@ import numpy as np
 import pandas as pd
 import altair as alt
 import tensorflow_hub as hub
+import tf_keras
 
 # Streamlit Layout
 st.set_page_config(page_title="Stroke Detection", page_icon="🧠")
@@ -56,7 +57,7 @@ uploaded_file = st.file_uploader("Upload a CT scan image (JPG, PNG, or JPEG)", t
 
 # Load the model
 MODEL_PATH = "./resnet_model.h5"
-model = tf.keras.models.load_model(MODEL_PATH, custom_objects={'KerasLayer': hub.KerasLayer})
+model = tf_keras.models.load_model(MODEL_PATH, custom_objects={'KerasLayer': hub.KerasLayer})
 
 if uploaded_file is not None:
     # Display the uploaded image
