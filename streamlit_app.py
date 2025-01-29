@@ -14,7 +14,7 @@ import tensorflow_hub as hub
 st.set_page_config(page_title="Stroke Detection", page_icon="🧠")
 
 # Function to preprocess and predict
-@st.cache_resource(suppress_st_warning=True)
+@st.cache_resource #(suppress_st_warning=True)
 def predict_image(image, model):
     # Load and preprocess the image
     image = load_img(image, target_size=(224, 224))  # Resize to model's input size
