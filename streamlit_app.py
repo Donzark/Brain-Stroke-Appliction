@@ -1,3 +1,5 @@
+import os
+os.system("pip install tensorflow-hub")
 import streamlit as st
 import tensorflow as tf
 from tensorflow.keras.preprocessing.image import img_to_array, load_img
