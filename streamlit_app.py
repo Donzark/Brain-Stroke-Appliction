@@ -61,7 +61,7 @@ model = tf_keras.models.load_model(MODEL_PATH, custom_objects={'KerasLayer': hub
 
 if uploaded_file is not None:
     # Display the uploaded image
-    st.image(uploaded_file, caption="Uploaded Image", use_column_width=True)
+    st.image(uploaded_file, caption="Uploaded Image", use_container_width=True)
     pred_button = st.button("Predict")
 
     if pred_button:
