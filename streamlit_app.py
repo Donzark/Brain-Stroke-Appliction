@@ -14,7 +14,7 @@ import tf_keras
 # Streamlit Layout
 st.set_page_config(page_title="Stroke Detection", page_icon="🧠")
 
-Function to preprocess and predict
+# Function to preprocess and predict
 @st.cache_resource #(suppress_st_warning=True)
 def predict_image(image, _model):
     # Load and preprocess the image
