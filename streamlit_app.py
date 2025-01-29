@@ -5,15 +5,8 @@ import numpy as np
 import pandas as pd
 import altair as alt
 
-# Load the model
-MODEL_PATH = "./resnet_model.h5"
-model = tf.keras.models.load_model(MODEL_PATH, custom_objects={'KerasLayer': tf.keras.layers.Layer})
-
-# Define class names
-class_names = ["Normal", "Stroke"]  # Update based on your dataset's classes
-
 # Function to preprocess and predict
-@st.cache(suppress_st_warning=True)
+# @st.cache(suppress_st_warning=True)
 def predict_image(image, model):
     # Load and preprocess the image
     image = load_img(image, target_size=(224, 224))  # Resize to model's input size
@@ -34,6 +27,9 @@ def predict_image(image, model):
     df = df.sort_values("Confidence (%)", ascending=False)
     return pred_class, pred_conf, df
 
+# Define class names
+class_names = ["Normal", "Stroke"]  # Update based on your dataset's classes
+
 # Streamlit Layout
 st.set_page_config(page_title="Stroke Detection", page_icon="🧠")
 
@@ -48,10 +44,14 @@ This application uses a **ResNet-based CNN model** to detect whether a CT scan i
 
 # Main App
 st.title("🧠 Stroke Detection")
-st.write("Upload a CT scan image to detect signs of a stroke.")
+st.write("Upload a Brain CT scan image to detect signs of a stroke.")
 
 # File uploader
 uploaded_file = st.file_uploader("Upload a CT scan image (JPG, PNG, or JPEG)", type=["jpg", "jpeg", "png"])
+
+# Load the model
+MODEL_PATH = "./resnet_model.h5"
+model = tf.keras.models.load_model(MODEL_PATH, custom_objects={'KerasLayer': tf.keras.layers.Layer})
 
 if uploaded_file is not None:
     # Display the uploaded image
