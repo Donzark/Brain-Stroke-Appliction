@@ -10,6 +10,9 @@ import pandas as pd
 import altair as alt
 import tensorflow_hub as hub
 
+# Streamlit Layout
+st.set_page_config(page_title="Stroke Detection", page_icon="🧠")
+
 # Function to preprocess and predict
 @st.cache(suppress_st_warning=True)
 def predict_image(image, model):
@@ -34,9 +37,6 @@ def predict_image(image, model):
 
 # Define class names
 class_names = ["Normal", "Stroke"]  # Update based on your dataset's classes
-
-# Streamlit Layout
-st.set_page_config(page_title="Stroke Detection", page_icon="🧠")
 
 # Sidebar
 st.sidebar.title("Stroke Detection App")
