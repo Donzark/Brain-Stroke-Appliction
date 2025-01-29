@@ -4,9 +4,10 @@ from tensorflow.keras.preprocessing.image import img_to_array, load_img
 import numpy as np
 import pandas as pd
 import altair as alt
+import tensorflow_hub as hub
 
 # Function to preprocess and predict
-# @st.cache(suppress_st_warning=True)
+@st.cache(suppress_st_warning=True)
 def predict_image(image, model):
     # Load and preprocess the image
     image = load_img(image, target_size=(224, 224))  # Resize to model's input size
@@ -51,7 +52,7 @@ uploaded_file = st.file_uploader("Upload a CT scan image (JPG, PNG, or JPEG)", t
 
 # Load the model
 MODEL_PATH = "./resnet_model.h5"
-model = tf.keras.models.load_model(MODEL_PATH, custom_objects={'KerasLayer': tf.keras.layers.Layer})
+model = tf.keras.models.load_model(MODEL_PATH, custom_objects={'KerasLayer': hub.KerasLayer})
 
 if uploaded_file is not None:
     # Display the uploaded image
