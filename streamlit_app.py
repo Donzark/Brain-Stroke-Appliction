@@ -75,7 +75,7 @@ st.set_page_config(page_title="Stroke Detection", page_icon="🧠")
 
 # Function to preprocess and predict
 @st.cache_resource
-def predict_image(image, model):
+def predict_image(image, _model):
     # Load and preprocess the image
     image = load_img(image, target_size=(224, 224))  # Resize to model's input size
     image = img_to_array(image) / 255.0  # Normalize pixel values
