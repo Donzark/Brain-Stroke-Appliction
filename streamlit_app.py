@@ -92,7 +92,7 @@ def predict_image(image, _model):
     healthy_confidence = 100 - stroke_confidence
 
     # Determine prediction class and display confidence
-    if preds > 0.5:
+    if preds > 50:
         pred_class = "Potential Stroke Detected. Immediate medical evaluation is advised!"
         pred_conf = stroke_confidence  # Confidence reflects Stroke prediction
     else:
