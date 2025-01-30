@@ -180,7 +180,7 @@ if uploaded_file is not None:
             f.write(uploaded_file.getbuffer())
 
         # Predict using the model
-        pred_class, pred_conf, df = predict_image("temp_image.jpg", model)
+        pred_class, pred_conf = predict_image("temp_image.jpg", model)
 
         # Display results
         st.success(f"Prediction: **{pred_class}**\nConfidence: **{pred_conf * 100:.2f}%**")
