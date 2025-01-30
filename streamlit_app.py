@@ -81,32 +81,41 @@ def predict_image(image, _model):
     image = img_to_array(image)
     image = np.expand_dims(image, axis=0)  # Add batch dimension
 
-    # Make prediction
-    preds = model.predict(image)[0][0]  # Extract single probability value
+# Make prediction
+    preds = model.predict(image)
 
-    # Define class names
-    class_names = ["Healthy", "Stroke"]
+    # Convert probability to class
+    pred_class = "Potential Stroke Detected. Immediate medical evaluation is advised!" if preds[0] > threshold else "No Stroke Indicators Detected."
+    pred_conf = float(preds[0])  # Convert NumPy value to float
 
-    # Convert probability to percentages
-    stroke_confidence = preds * 100
-    healthy_confidence = 100 - stroke_confidence
+    return pred_class, pred_conf
 
-    # Determine prediction class and display confidence
-    if preds > 50:
-        pred_class = "Potential Stroke Detected. Immediate medical evaluation is advised!"
-        pred_conf = stroke_confidence  # Confidence reflects Stroke prediction
-    else:
-        pred_class = "No Stroke Indicators Detected."
-        pred_conf = healthy_confidence  # Confidence reflects Healthy prediction
+    # # Make prediction
+    # preds = model.predict(image)[0][0]  # Extract single probability value
 
-    # Create DataFrame for visualization
-    df = pd.DataFrame({
-        "Class": class_names,
-        "Confidence (%)": [healthy_confidence, stroke_confidence],
-        "color": ['#3498DB', '#EC5953']
-    })
+    # # Define class names
+    # class_names = ["Healthy", "Stroke"]
 
-    return pred_class, pred_conf, df
+    # # Convert probability to percentages
+    # stroke_confidence = preds * 100
+    # healthy_confidence = 100 - stroke_confidence
+
+    # # Determine prediction class and display confidence
+    # if preds > 50:
+    #     pred_class = "Potential Stroke Detected. Immediate medical evaluation is advised!"
+    #     pred_conf = stroke_confidence  # Confidence reflects Stroke prediction
+    # else:
+    #     pred_class = "No Stroke Indicators Detected."
+    #     pred_conf = healthy_confidence  # Confidence reflects Healthy prediction
+
+    # # Create DataFrame for visualization
+    # df = pd.DataFrame({
+    #     "Class": class_names,
+    #     "Confidence (%)": [healthy_confidence, stroke_confidence],
+    #     "color": ['#3498DB', '#EC5953']
+    # })
+
+    # return pred_class, pred_conf, df
 
 
 
@@ -175,12 +184,12 @@ if uploaded_file is not None:
 
         # Display results
         st.success(f"Prediction: **{pred_class}**\nConfidence: **{pred_conf * 100:.2f}%**")
-        st.write(alt.Chart(df).mark_bar().encode(
-            x='Confidence (%)',
-            y=alt.Y('Class', sort=None),
-            color=alt.Color("color", scale=None),
-            text='Confidence (%)'
-        ).properties(width=600, height=400).mark_text(align="left", dx=5))
+        # st.write(alt.Chart(df).mark_bar().encode(
+        #     x='Confidence (%)',
+        #     y=alt.Y('Class', sort=None),
+        #     color=alt.Color("color", scale=None),
+        #     text='Confidence (%)'
+        # ).properties(width=600, height=400).mark_text(align="left", dx=5))
 else:
     st.warning("Please upload an image to proceed.")
 
