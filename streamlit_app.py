@@ -49,28 +49,65 @@ st.set_page_config(page_title="Stroke Detection", page_icon="🧠")
 #     return pred_class, pred_conf, df
 
 
+# # Function to preprocess and predict
+# @st.cache_resource #(suppress_st_warning=True)
+# def predict_image(image, _model):
+#     # Load and preprocess the image
+#     image = load_img(image, target_size=(224, 224))  # Resize to model's input size
+#     image = img_to_array(image)/255.0  # Normalize pixel values
+#     image = np.expand_dims(image, axis=0)  # Add batch dimension
+
+#     # Make predictions
+#     preds = model.predict(image)
+#     pred_class = "Potential Stroke Detected. Immediate medical evaluation is advised!" if preds[0] > 0.5 else "No Stroke Indicators Detected."
+
+#     pred_conf = float(preds[0]) 
+
+#     # Create a DataFrame for visualization
+#     df = pd.DataFrame({
+#         "Class": class_names,
+#         "Confidence (%)": preds[0] * 100,
+#         "color": ['#EC5953' if i == np.argmax(preds[0]) else '#3498DB' for i in range(len(class_names))]
+#     })
+#     df = df.sort_values("Confidence (%)", ascending=False)
+#     return pred_class, pred_conf, df
+
+
 # Function to preprocess and predict
-@st.cache_resource #(suppress_st_warning=True)
-def predict_image(image, _model):
+@st.cache_resource
+def predict_image(image, model):
     # Load and preprocess the image
     image = load_img(image, target_size=(224, 224))  # Resize to model's input size
-    image = img_to_array(image)/255.0  # Normalize pixel values
+    image = img_to_array(image) / 255.0  # Normalize pixel values
     image = np.expand_dims(image, axis=0)  # Add batch dimension
 
-    # Make predictions
-    preds = model.predict(image)
-    pred_class = "Potential Stroke Detected. Immediate medical evaluation is advised!" if preds[0] > 0.5 else "No Stroke Indicators Detected."
+    # Make prediction
+    preds = model.predict(image)[0][0]  # Extract single probability value
 
-    pred_conf = float(preds[0]) 
+    # Define class names
+    class_names = ["Healthy", "Stroke"]
 
-    # Create a DataFrame for visualization
+    # Convert probability to percentages
+    stroke_confidence = preds * 100
+    healthy_confidence = 100 - stroke_confidence
+
+    # Determine prediction class and display confidence
+    if preds > 0.5:
+        pred_class = "Potential Stroke Detected. Immediate medical evaluation is advised!"
+        pred_conf = stroke_confidence  # Confidence reflects Stroke prediction
+    else:
+        pred_class = "No Stroke Indicators Detected."
+        pred_conf = healthy_confidence  # Confidence reflects Healthy prediction
+
+    # Create DataFrame for visualization
     df = pd.DataFrame({
         "Class": class_names,
-        "Confidence (%)": preds[0] * 100,
-        "color": ['#EC5953' if i == np.argmax(preds[0]) else '#3498DB' for i in range(len(class_names))]
+        "Confidence (%)": [healthy_confidence, stroke_confidence],
+        "color": ['#3498DB', '#EC5953']
     })
-    df = df.sort_values("Confidence (%)", ascending=False)
+
     return pred_class, pred_conf, df
+
 
 
 # @st.cache_resource
