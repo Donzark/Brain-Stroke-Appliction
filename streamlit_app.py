@@ -25,7 +25,7 @@ def predict_image(image, _model):
     preds = model.predict(image)
 
     # Debugging: Show raw predictions
-    st.subheader("🔍 Debugging Information")
+    st.subheader("🔍 Debugging Information.")
     st.write("**Raw model outputs:**", preds)
     st.write("**Predicted class index:**", int(np.argmax(preds[0])))
     st.write("**Predicted confidence:**", float(np.max(preds[0])))
