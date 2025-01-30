@@ -85,7 +85,7 @@ def predict_image(image, _model):
     preds = model.predict(image)
 
     # Convert probability to class
-    pred_class = "Potential Stroke Detected. Immediate medical evaluation is advised!" if preds[0] > threshold else "No Stroke Indicators Detected."
+    pred_class = "Potential Stroke Detected. Immediate medical evaluation is advised!" if preds[0] > 0.5 else "No Stroke Indicators Detected."
     pred_conf = float(preds[0])  # Convert NumPy value to float
 
     return pred_class, pred_conf
