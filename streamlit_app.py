@@ -78,7 +78,7 @@ st.set_page_config(page_title="Stroke Detection", page_icon="🧠")
 def predict_image(image, _model):
     # Load and preprocess the image
     image = load_img(image, target_size=(224, 224))  # Resize to model's input size
-    image = img_to_array(image) / 255.0
+    image = img_to_array(image) #/ 255.0
     image = np.expand_dims(image, axis=0)  # Add batch dimension
 
 # Make prediction
