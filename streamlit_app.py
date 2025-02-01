@@ -9,6 +9,7 @@ import numpy as np
 import pandas as pd
 import altair as alt
 import tensorflow_hub as hub
+from tensorflow.keras.models import load_model
 import tf_keras
 
 # Streamlit Layout
@@ -166,8 +167,8 @@ st.write("Upload a Brain CT scan image to detect signs of a stroke.")
 uploaded_file = st.file_uploader("Upload a CT scan image (JPG, PNG, or JPEG)", type=["jpg", "jpeg", "png"])
 
 # Load the model
-MODEL_PATH = "./resnet_sigmoid_model.h5"
-model = tf_keras.models.load_model(MODEL_PATH, custom_objects={'KerasLayer': hub.KerasLayer})
+MODEL_PATH = "./resnet_sigmoid_model"
+model = load_model(filepath = MODEL_PATH)
 
 if uploaded_file is not None:
     # Display the uploaded image
