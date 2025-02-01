@@ -166,9 +166,14 @@ st.write("Upload a Brain CT scan image to detect signs of a stroke.")
 # File uploader
 uploaded_file = st.file_uploader("Upload a CT scan image (JPG, PNG, or JPEG)", type=["jpg", "jpeg", "png"])
 
-# Load the model
+# # Load the model
+# MODEL_PATH = "./resnet_sigmoid_model"
+# model = load_model(filepath = MODEL_PATH)
+
+from tensorflow.keras.layers import TFSMLayer
+
 MODEL_PATH = "./resnet_sigmoid_model"
-model = load_model(filepath = MODEL_PATH)
+model = TFSMLayer(MODEL_PATH, call_endpoint='serving_default')
 
 if uploaded_file is not None:
     # Display the uploaded image
