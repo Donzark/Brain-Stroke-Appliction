@@ -83,7 +83,7 @@ def predict_image(image, _model):
     image = np.expand_dims(image, axis=0)  # Add batch dimension
 
 # Make prediction
-    preds = model.predict(image)
+    preds = model(image)
 
     # Convert probability to class
     pred_class = "Potential Stroke Detected. Immediate medical evaluation is advised!" if preds[0] > 0.5 else "No Stroke Indicators Detected."
