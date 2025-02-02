@@ -113,7 +113,7 @@ def predict_image(image_path, model):
     preds = preds.numpy() if hasattr(preds, "numpy") else np.array(preds)
 
     # Convert probability to class
-    pred_class = "Potential Stroke Detected. Immediate medical evaluation needed." if preds[0] > 0.5 else "No stroke detected."
+    pred_class = "Potential Stroke Detected. Immediate medical evaluation needed." if preds[0] > 0.5 else "No Stroke Indicators Detected."
     pred_conf = preds[0]  # Confidence score
 
     return pred_class, pred_conf
@@ -218,7 +218,17 @@ if uploaded_file is not None:
 
         # Display results
         # st.success(f"Prediction: **{pred_class}**\nConfidence: **{pred_conf * 100:.2f}%**")
-        st.success(f"Prediction: **{pred_class}**\nConfidence: **{pred_conf[0] * 100:.2f}%**")
+        # st.success(f"Prediction: **{pred_class}**\nConfidence: **{pred_conf[0] * 100:.2f}%**")
+        ##st.markdown(f"**Prediction:** {pred_class}  \n**Confidence:** {pred_conf[0] * 100:.2f}%")
+        # Adjust confidence to always show high values
+        if pred_class == "No Stroke Indicators Detected.":
+            adjusted_conf = 100 - (pred_conf[0] * 100)
+        else:
+            adjusted_conf = pred_conf[0] * 100
+        
+        # Print the formatted confidence
+        st.success(f"Prediction: **{pred_class}**\n\nConfidence: **{adjusted_conf:.2f}%**")
+
 
         # st.write(alt.Chart(df).mark_bar().encode(
         #     x='Confidence (%)',
