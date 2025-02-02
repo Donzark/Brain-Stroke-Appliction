@@ -217,7 +217,9 @@ if uploaded_file is not None:
         pred_class, pred_conf = predict_image("temp_image.jpg", model)
 
         # Display results
-        st.success(f"Prediction: **{pred_class}**\nConfidence: **{pred_conf * 100:.2f}%**")
+        # st.success(f"Prediction: **{pred_class}**\nConfidence: **{pred_conf * 100:.2f}%**")
+        st.success(f"Prediction: **{pred_class}**\nConfidence: **{pred_conf[0] * 100:.2f}%**")
+
         # st.write(alt.Chart(df).mark_bar().encode(
         #     x='Confidence (%)',
         #     y=alt.Y('Class', sort=None),
