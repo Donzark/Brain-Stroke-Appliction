@@ -76,20 +76,48 @@ st.set_page_config(page_title="Stroke Detection", page_icon="🧠")
 
 # Function to preprocess and predict
 @st.cache_resource
-def predict_image(image, _model):
-    # Load and preprocess the image
-    image = load_img(image, target_size=(224, 224))  # Resize to model's input size
-    image = img_to_array(image) #/ 255.0
+# def predict_image(image, _model):
+#     # Load and preprocess the image
+#     image = load_img(image, target_size=(224, 224))  # Resize to model's input size
+#     image = img_to_array(image) #/ 255.0
+#     image = np.expand_dims(image, axis=0)  # Add batch dimension
+
+# # Make prediction
+#     preds = model(image).numpy()
+
+#     # Convert probability to class
+#     pred_class = "Potential Stroke Detected. Immediate medical evaluation is advised!" if preds[0][0] > 0.5 else "No Stroke Indicators Detected."
+#     pred_conf = float(preds[0][0])  # Convert NumPy value to float
+
+#     return pred_class, pred_conf
+
+
+def predict_image(image_path, model):
+    import tensorflow as tf
+    import numpy as np
+    from tensorflow.keras.preprocessing.image import load_img, img_to_array
+
+    # Load and preprocess image
+    image = load_img(image_path, target_size=(224, 224))
+    image = img_to_array(image)
     image = np.expand_dims(image, axis=0)  # Add batch dimension
 
-# Make prediction
-    preds = model(image).numpy()
+    # Make prediction
+    preds = model(image)
+    
+    # Check if preds is a dictionary
+    if isinstance(preds, dict):
+        key = list(preds.keys())[0]  # Get first key
+        preds = preds[key]  # Extract tensor
+    
+    preds = preds.numpy() if hasattr(preds, "numpy") else np.array(preds)
 
     # Convert probability to class
-    pred_class = "Potential Stroke Detected. Immediate medical evaluation is advised!" if preds[0][0] > 0.5 else "No Stroke Indicators Detected."
-    pred_conf = float(preds[0][0])  # Convert NumPy value to float
+    pred_class = "Potential Stroke Detected. Immediate medical evaluation needed." if preds[0] > 0.5 else "No stroke detected."
+    pred_conf = preds[0]  # Confidence score
 
     return pred_class, pred_conf
+
 
     # # Make prediction
     # preds = model.predict(image)[0][0]  # Extract single probability value
