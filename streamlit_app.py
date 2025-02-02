@@ -176,18 +176,12 @@ with st.sidebar:
     st.markdown("---")
     st.info("💡 Upload a Brain CT scan image on the right panel to get a stroke detection diagnosis.")
 
-     # Acknowledgment Section
+    # Acknowledgment Section
     st.markdown("---")
-    st.markdown("### 🙌 Acknowledgements")
+    st.markdown("### 🙌 Acknowledgment")
     st.markdown("""
-    This project was proudly sponsored by **NITDA** (National Information Technology Development Agency) through the **Nigeria Artificial Intelligence Research Scheme (NAIRS)**.
-    
-    **About NITDA**  
-    NITDA is committed to empowering the future through **innovation and digital transformation**, supporting groundbreaking research in **artificial intelligence** and related fields.
-    
-    **Grant Details**  
-    - **Recipient:** Dr. Obasa, Adekunle Isiaka *(Nigerian Researcher)*  
-    - **Research Focus:** Application of hybrid machine learning techniques to improve the **diagnosis of ischemic strokes** in CT scan images.  
+    This project is supported by **NITDA** through the **Nigeria AI Research Scheme (NAIRS)**.  
+    Special recognition to **Dr. Obasa, Adekunle Isiaka** for pioneering this research.
     """)
 
 
