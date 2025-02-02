@@ -173,7 +173,7 @@ uploaded_file = st.file_uploader("Upload a CT scan image (JPG, PNG, or JPEG)", t
 from tensorflow.keras.layers import TFSMLayer
 
 MODEL_PATH = "./resnet_sigmoid_model"
-model = tf.keras.layers.TFSMLayer("./resnet_sigmoid_model") 
+model = tf.keras.layers.TFSMLayer(MODEL_PATH, call_endpoint='serving_default') 
 
 if uploaded_file is not None:
     # Display the uploaded image
