@@ -410,7 +410,7 @@ def predict_image(image_path, model):
     
     preds = preds.numpy() if hasattr(preds, "numpy") else np.array(preds)
 
-    pred_class = " Potential Stroke Detected. Immediate medical evaluation is Advised!." if preds[0] > 0.5 else " No Stroke Indicators Detected."
+    pred_class = "Potential Stroke Detected. Immediate medical evaluation is Advised!." if preds[0] > 0.5 else "No Stroke Indicators Detected."
     pred_conf = preds[0]  
 
     return pred_class, pred_conf
