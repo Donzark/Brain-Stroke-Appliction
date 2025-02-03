@@ -240,8 +240,6 @@ import streamlit as st
 import tensorflow as tf
 from tensorflow.keras.preprocessing.image import img_to_array, load_img
 import numpy as np
-import pandas as pd
-import altair as alt
 import tensorflow_hub as hub
 from tensorflow.keras.models import load_model
 import tf_keras
@@ -297,33 +295,30 @@ with st.sidebar:
     st.markdown("---")
     st.info("💡 Upload a Brain CT scan image on the right panel to get a stroke detection diagnosis.")
 
+# Store session state
+if "uploaded_file" not in st.session_state:
+    st.session_state.uploaded_file = None
+if "prediction" not in st.session_state:
+    st.session_state.prediction = None
+
 # Centered Layout Before Upload
-if "uploaded" not in st.session_state:
-    st.session_state.uploaded = False
+st.title("🧠 AI-Powered Stroke Detection")
+st.markdown("Upload a **Brain CT scan image** to detect signs of a stroke.")
 
-if not st.session_state.uploaded:
-    st.title("🧠 AI-Powered Stroke Detection")
-    st.markdown("Upload a **Brain CT scan image** to detect signs of a stroke.")
-    uploaded_file = st.file_uploader(
-        "📤 Upload a Brain CT scan image (JPG, PNG, or JPEG)", 
-        type=["jpg", "jpeg", "png"]
-    )
-else:
-    uploaded_file = None  # Reset if already uploaded
+uploaded_file = st.file_uploader(
+    "📤 Upload a Brain CT scan image (JPG, PNG, or JPEG)", 
+    type=["jpg", "jpeg", "png"]
+)
 
-# Model loading and prediction logic
-from tensorflow.keras.layers import TFSMLayer
-MODEL_PATH = "./resnet_sigmoid_model"
-model = tf.keras.layers.TFSMLayer(MODEL_PATH, call_endpoint='serving_default')
+if uploaded_file:
+    st.session_state.uploaded_file = uploaded_file  # Save to session state
 
 # After Upload: Switch to Two-Column Layout
-if uploaded_file:
-    st.session_state.uploaded = True  # Set session state to indicate an image has been uploaded
-
+if st.session_state.uploaded_file:
     col1, col2 = st.columns([1, 2])
 
     with col1:
-        st.image(uploaded_file, caption="📷 Uploaded Image", width=300)
+        st.image(st.session_state.uploaded_file, caption="📷 Uploaded Image", width=300)
 
     with col2:
         pred_button = st.button("🧠 Analyze Image")
@@ -332,19 +327,27 @@ if uploaded_file:
             with st.spinner("🔄 Analyzing the CT scan..."):
                 # Save the uploaded file temporarily
                 with open("temp_image.jpg", "wb") as f:
-                    f.write(uploaded_file.getbuffer())
+                    f.write(st.session_state.uploaded_file.getbuffer())
 
-                    # Predict using the model
-                    pred_class, pred_conf = predict_image("temp_image.jpg", model)
-    
-                    # Adjust confidence to always show high values
-                    adjusted_conf = 100 - (pred_conf[0] * 100) if "No Stroke" in pred_class else pred_conf[0] * 100
-    
-                    # Display Results
-                    if "No Stroke" in pred_class:
-                        st.success(f"✅ **{pred_class}**\n\nConfidence: **{adjusted_conf:.2f}%**")
-                    else:
-                        st.error(f"⚠️ **{pred_class}**\n\nConfidence: **{adjusted_conf:.2f}%**")
+                # Model loading and prediction logic
+                from tensorflow.keras.layers import TFSMLayer
+                MODEL_PATH = "./resnet_sigmoid_model"
+                model = tf.keras.layers.TFSMLayer(MODEL_PATH, call_endpoint='serving_default')
 
-else:
-    st.warning("⚠️ Please upload a **Brain CT scan image** to proceed.")
+                # Predict using the model
+                pred_class, pred_conf = predict_image("temp_image.jpg", model)
+
+                # Adjust confidence to always show high values
+                adjusted_conf = 100 - (pred_conf[0] * 100) if "No Stroke" in pred_class else pred_conf[0] * 100
+
+                # Save prediction to session state
+                st.session_state.prediction = (pred_class, adjusted_conf)
+
+# Display Prediction (Persists after rerun)
+if st.session_state.prediction:
+    pred_class, adjusted_conf = st.session_state.prediction
+
+    if "No Stroke" in pred_class:
+        st.success(f"✅ **{pred_class}**\n\nConfidence: **{adjusted_conf:.2f}%**")
+    else:
+        st.error(f"⚠️ **{pred_class}**\n\nConfidence: **{adjusted_conf:.2f}%**")
