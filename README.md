@@ -105,19 +105,6 @@ To install all dependencies, run:
 pip install -r requirements.txt
 ```
 
-## 🧪 Example
-Input:
-Upload a CT scan image like this:
-
-<img src="https://via.placeholder.com/600x400.png?text=CT+Scan+Image" alt="Sample CT Scan Image" width="600"/>
-Output:
-The app classifies the image and provides a confidence score:
-
-``` makefile
-Prediction: Stroke
-Confidence: 85.67%
-Bar chart visualization: <img src="https://via.placeholder.com/600x300.png?text=Bar+Chart+Visualization" alt="Sample Bar Chart" width="600"/>
-```
 
 ## 📂 Dataset
 
@@ -147,7 +134,6 @@ This application uses the **[Brain Stroke CT Image Dataset](https://www.kaggle.c
 - Add more detailed stroke classification (e.g., ischemic vs. hemorrhagic).
 - Incorporate additional datasets for improved accuracy.
 - Deploy the app to a cloud platform (e.g., Streamlit Sharing, AWS, or Heroku).
-- Provide support for drag-and-drop file uploads.
 
 ## 🙌 Acknowledgements
 
