@@ -410,7 +410,7 @@ def predict_image(image_path, model):
     
     preds = preds.numpy() if hasattr(preds, "numpy") else np.array(preds)
 
-    pred_class = "⚠️ Potential Stroke Detected. Immediate medical evaluation needed." if preds[0] > 0.5 else "✅ No Stroke Indicators Detected."
+    pred_class = " Potential Stroke Detected. Immediate medical evaluation is Advised!." if preds[0] > 0.5 else " No Stroke Indicators Detected."
     pred_conf = preds[0]  
 
     return pred_class, pred_conf
@@ -436,7 +436,7 @@ with st.sidebar:
     Special recognition to **Dr. Obasa, Adekunle Isiaka** for pioneering this research.
     """)
 
-# Title (Centered)
+# Title 
 st.title("🧠 AI-Powered Stroke Detection")
 st.markdown("Upload a **Brain CT scan image** to detect signs of a stroke.")
 
@@ -446,7 +446,7 @@ if "uploaded_file" not in st.session_state:
 if "prediction" not in st.session_state:
     st.session_state.prediction = None
 
-# File Uploader (Centered)
+# File Uploader
 uploaded_file = st.file_uploader(
     "📤 Upload a Brain CT scan image (JPG, PNG, or JPEG)", 
     type=["jpg", "jpeg", "png"]
