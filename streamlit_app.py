@@ -359,3 +359,7 @@ if st.session_state.prediction:
         st.success(f"✅ **{pred_class}**\n\nConfidence: **{adjusted_conf:.2f}%**")
     else:
         st.error(f"⚠️ **{pred_class}**\n\nConfidence: **{adjusted_conf:.2f}%**")
+
+
+else:
+    st.warning("⚠️ Please upload a **Brain CT scan image** to proceed.")
