@@ -1,4 +1,4 @@
-# 🧠 Stroke Detection App
+# 🧠 AI Powered Stroke Detection App
 
 This is a **Streamlit application** that uses a **ResNet-based Convolutional Neural Network (CNN)** to classify CT scan images into two categories: **Normal** or **Stroke**. The app is designed to assist in the preliminary detection of strokes using medical CT scan images.
 
@@ -67,10 +67,10 @@ streamlit run stroke_detection_app.py
 stroke-detection-app/
 │
 ├── stroke_detection_app.py    # Streamlit application code
-├── resnet_model.h5            # Trained ResNet model (to be added)
+├── resnet_sigmoid_model       # Trained ResNet model 
 ├── requirements.txt           # List of dependencies
 ├── README.md                  # Project README file
-└── sample_images/             # Sample CT scan images for testing (optional)
+└── sample_images/             # Sample CT scan images for testing 
 ```
 
 ## ⚙️ How to Use
