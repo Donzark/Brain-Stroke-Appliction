@@ -25,7 +25,7 @@ Download and upload these images to the app for quick testing and evaluation!
   Detects whether a CT scan image indicates a **normal brain** or signs of a **stroke**.
   
 - **High Accuracy**:  
-  The ResNet model achieved an impressive **98% accuracy** on the test dataset, demonstrating its reliability for stroke detection.
+  The ResNet model achieved an impressive **94% accuracy** on the test dataset, demonstrating its reliability for stroke detection.
 
 - **Interactive Interface**:  
   Built with Streamlit, the app provides a user-friendly interface for image upload and classification.
