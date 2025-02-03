@@ -334,17 +334,17 @@ if uploaded_file:
                 with open("temp_image.jpg", "wb") as f:
                     f.write(uploaded_file.getbuffer())
 
-                # Predict using the model
-                pred_class, pred_conf = predict_image("temp_image.jpg", model)
-
-                # Adjust confidence to always show high values
-                adjusted_conf = 100 - (pred_conf[0] * 100) if "No Stroke" in pred_class else pred_conf[0] * 100
-
-                # Display Results
-                if "No Stroke" in pred_class:
-                    st.success(f"✅ **{pred_class}**\n\nConfidence: **{adjusted_conf:.2f}%**")
-                else:
-                    st.error(f"⚠️ **{pred_class}**\n\nConfidence: **{adjusted_conf:.2f}%**")
+                    # Predict using the model
+                    pred_class, pred_conf = predict_image("temp_image.jpg", model)
+    
+                    # Adjust confidence to always show high values
+                    adjusted_conf = 100 - (pred_conf[0] * 100) if "No Stroke" in pred_class else pred_conf[0] * 100
+    
+                    # Display Results
+                    if "No Stroke" in pred_class:
+                        st.success(f"✅ **{pred_class}**\n\nConfidence: **{adjusted_conf:.2f}%**")
+                    else:
+                        st.error(f"⚠️ **{pred_class}**\n\nConfidence: **{adjusted_conf:.2f}%**")
 
 else:
     st.warning("⚠️ Please upload a **Brain CT scan image** to proceed.")
