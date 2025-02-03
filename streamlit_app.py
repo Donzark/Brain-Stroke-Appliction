@@ -275,7 +275,7 @@ def predict_image(image_path, model):
     preds = preds.numpy() if hasattr(preds, "numpy") else np.array(preds)
 
     # Convert probability to class
-    pred_class = "⚠️ Potential Stroke Detected. Immediate medical evaluation needed." if preds[0] > 0.5 else "✅ No Stroke Indicators Detected."
+    pred_class = " Potential Stroke Detected. Immediate medical evaluation is Adviced!." if preds[0] > 0.5 else " No Stroke Indicators Detected."
     pred_conf = preds[0]  # Confidence score
 
     return pred_class, pred_conf
@@ -294,6 +294,14 @@ with st.sidebar:
     """)
     st.markdown("---")
     st.info("💡 Upload a Brain CT scan image on the right panel to get a stroke detection diagnosis.")
+
+     # Acknowledgment Section
+    st.markdown("---")
+    st.markdown("### 🙌 Acknowledgment")
+    st.markdown("""
+    This project is supported by **NITDA** through the **Nigeria AI Research Scheme (NAIRS)**.  
+    Special recognition to **Dr. Obasa, Adekunle Isiaka** for pioneering this research.
+    """)
 
 # Store session state
 if "uploaded_file" not in st.session_state:
