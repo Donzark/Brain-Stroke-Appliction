@@ -4,7 +4,7 @@ This is a **Streamlit application** that uses a **ResNet-based Convolutional Neu
 
 ## Demo App
 
-[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://brain_stroke_detection.streamlit.app/)
+[![Streamlit App](https://brain-stroke-appliction.streamlit.app/)
 ---
 
 ## 🚀 Features
